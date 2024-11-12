@@ -1,0 +1,8 @@
+import os
+user = input("Enter the image name")
+os.system('fswebcam' + user)
+if(user):
+    print("Image is Captured")
+
+else:
+    print("ERROR")
