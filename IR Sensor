@@ -1,0 +1,32 @@
+import RPi.GPIO as GPIO
+import time
+
+# Constants for sensor and LED pin numbers
+sensor = 7
+led = 3
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(sensor, GPIO.IN)  # Set sensor pin as input
+GPIO.setup(led, GPIO.OUT)    # Set LED pin as output
+GPIO.output(led, False)      # Initialize LED as off
+
+print("IR Sensor Ready")
+print("")
+
+
+try:
+    while True:
+        # Check if sensor detects an object
+        if GPIO.input(sensor):
+            GPIO.output(led, True)  # Turn on LED
+            print("Object detected")
+
+            # Wait until the object is no longer detected
+            while GPIO.input(sensor):
+                    time.sleep(0.01)
+        else:
+            GPIO.output(led, False)  # Turn off LED
+
+except KeyboardInterrupt:
+    # Clean up GPIO on interruption
+    GPIO.cleanup()
